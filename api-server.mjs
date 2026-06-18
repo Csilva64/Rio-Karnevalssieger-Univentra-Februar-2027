@@ -3,14 +3,9 @@ import https from 'node:https'
 import Stripe from 'stripe'
 
 const STRIPE_PRICES = {
-  'macuco':           'price_1ThZ1CASOPwwexHbbIG2Gsit',
-  'rafahin':          'price_1ThZ1FASOPwwexHb7b7wfS7E',
-  'caboclos':         'price_1ThZ1IASOPwwexHbSwt6ku16',
-  'stadtspaziergang': 'price_1ThZ1NASOPwwexHbmcPeH7Ee',
-  'corcovado':        'price_1ThZ1NASOPwwexHbqfGLq3p2',
-  'samba':            'price_1ThZ1OASOPwwexHbP6KyiI9D',
-  'bahia-by-night':   'price_1ThZ1PASOPwwexHbyQFUTO4a',
-  'cachoeira':        'price_1ThZ1QASOPwwexHb3sfaIpNX',
+  'baleia':              '', // TODO: criar price no Stripe
+  'carnaval-backstage':  '', // TODO: criar price no Stripe
+  'marius':              '', // TODO: criar price no Stripe
 }
 
 const PORT = 3001

@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from 'react'
 const LANGS = {
   de: {
     placeholder: 'Stellen Sie eine Frage zur Reise...',
-    welcome: 'Herzlich willkommen! Ich bin Ihr persönlicher Reiseassistent für **Die Vielfalt Brasiliens - Gebeco**.\n\nIch begleite Sie auf Ihrer **15-tägigen Brasilien-Reise** — von den Iguaçu-Wasserfällen durch den Amazonas bis nach Rio de Janeiro und Salvador.\n\n**Wie kann ich dir heute helfen?**',
-    suggestions: ['Tagesablauf anzeigen', 'Hotels und Unterkünfte', 'Was ist inbegriffen?', 'Flugdetails', 'Amazonas-Programm', 'Reiseleiter-Kontakte'],
-    sysLang: 'Antworte IMMER auf Deutsch. Sei freundlich, präzise und enthusiastisch. Nutze Emojis sparsam.',
+    welcome: 'Herzlich willkommen bei Ihrem **Rio Karneval-Sieger Reiseassistenten**! 🎉\n\nIch begleite Sie auf der **8-tägigen Univentra-Reise** nach Rio de Janeiro — vom Corcovado über die Karnevals-Siegerparade bis zum Zuckerhut.\n\n**Wie kann ich Ihnen heute helfen?**',
+    suggestions: ['Tagesablauf anzeigen', 'Hotel & Unterkünfte', 'Was ist inbegriffen?', 'Karnevalstickets', 'Preise & Optionen', 'Kontakt OPCO Tours'],
+    sysLang: 'Antworte IMMER auf Deutsch. Sei freundlich, präzise und enthusiastisch für Rio Karneval. Nutze Emojis sparsam.',
     tabChat: 'Assistent',
-    tabEx: 'Ausflüge buchen',
+    tabEx: 'Optionale Ausflüge',
     day: 'Tag',
     book: 'Jetzt buchen',
     booking: 'Wird gebucht…',
@@ -17,11 +17,11 @@ const LANGS = {
   },
   pt: {
     placeholder: 'Faça uma pergunta sobre a viagem...',
-    welcome: 'Olá! Bem-vindo ao assistente de viagem da **Die Vielfalt Brasiliens - Gebeco**!\n\nEstou aqui para ajudá-lo durante os **15 dias pelo Brasil** — das Cataratas do Iguaçu à Amazônia, de Rio de Janeiro a Salvador.\n\n**Como posso te ajudar hoje?**',
-    suggestions: ['Ver roteiro dia a dia', 'Hotéis e hospedagens', 'O que está incluído?', 'Detalhes dos voos', 'Programa na Amazônia', 'Contatos dos guias'],
-    sysLang: 'Responda SEMPRE em português brasileiro. Seja amigável, preciso e entusiasmado. Use emojis com moderação.',
+    welcome: 'Olá! Bem-vindo ao assistente de viagem **Rio Karneval-Sieger · Univentra**! 🎉\n\nEstou aqui para ajudá-lo nos **8 dias em Rio de Janeiro** — do Corcovado ao Desfile das Campeãs no Sambódromo e ao Pão de Açúcar.\n\n**Como posso te ajudar hoje?**',
+    suggestions: ['Ver roteiro dia a dia', 'Hotel e hospedagem', 'O que está incluído?', 'Ingressos do Carnaval', 'Preços e opções', 'Contato OPCO Tours'],
+    sysLang: 'Responda SEMPRE em português brasileiro. Seja amigável, preciso e entusiasmado com o Carnaval do Rio. Use emojis com moderação.',
     tabChat: 'Assistente',
-    tabEx: 'Reservar Excursões',
+    tabEx: 'Passeios Opcionais',
     day: 'Dia',
     book: 'Reservar',
     booking: 'Aguarde…',
@@ -31,11 +31,11 @@ const LANGS = {
   },
   en: {
     placeholder: 'Ask a question about the trip...',
-    welcome: "Welcome! I'm your personal travel assistant for **Die Vielfalt Brasiliens - Gebeco**.\n\nI'm here to help throughout your **15-day Brazil journey** — from Iguaçu Falls through the Amazon to Rio de Janeiro and Salvador.\n\n**How can I help you today?**",
-    suggestions: ['Show daily itinerary', 'Hotels & accommodation', "What's included?", 'Flight details', 'Amazon programme', 'Guide contacts'],
-    sysLang: 'ALWAYS respond in English. Be friendly, precise and enthusiastic. Use emojis sparingly.',
+    welcome: "Welcome to your **Rio Karneval-Sieger Travel Assistant**! 🎉\n\nI'm here to help throughout your **8-day Univentra journey** to Rio de Janeiro — from Corcovado and the Champion Samba School Parade to Sugarloaf Mountain.\n\n**How can I help you today?**",
+    suggestions: ['Show daily itinerary', 'Hotel & accommodation', "What's included?", 'Carnival tickets', 'Prices & options', 'Contact OPCO Tours'],
+    sysLang: 'ALWAYS respond in English. Be friendly, precise and enthusiastic about Rio Carnival. Use emojis sparingly.',
     tabChat: 'Assistant',
-    tabEx: 'Book Excursions',
+    tabEx: 'Optional Excursions',
     day: 'Day',
     book: 'Book Now',
     booking: 'Booking…',
@@ -47,92 +47,110 @@ const LANGS = {
 
 const EXCURSIONS = [
   {
-    id: 'macuco', day: 2, location: 'Foz do Iguaçu', locEmoji: '💧', price: 135,
-    de: { name: 'Macuco Bootsafari', desc: 'Nähern Sie sich den Wasserfällen per Schnellboot — pure Naturgewalt hautnah erleben.' },
-    pt: { name: 'Macuco Boat Safari', desc: 'De lancha até o pé das cataratas — adrenalina e natureza em estado bruto.' },
-    en: { name: 'Macuco Boat Safari', desc: 'Speed-boat ride to the base of the falls — raw nature at full force.' },
+    id: 'baleia',
+    day: 2,
+    location: 'Rio de Janeiro',
+    locEmoji: '🦞',
+    price: 100,
+    currency: 'USD',
+    de: {
+      name: 'Dinner Restaurant Baleia',
+      desc: 'Exquisites Meeresfrüchte-Restaurant im Aterro do Flamengo — unvergesslicher erster Abend in Rio.',
+    },
+    pt: {
+      name: 'Jantar Restaurante Baleia',
+      desc: 'Requintado restaurante de frutos do mar no Aterro do Flamengo — primeira noite inesquecível no Rio.',
+    },
+    en: {
+      name: 'Dinner at Restaurant Baleia',
+      desc: 'Exquisite seafood restaurant at Aterro do Flamengo — unforgettable first evening in Rio.',
+    },
   },
   {
-    id: 'rafahin', day: 3, location: 'Foz do Iguaçu', locEmoji: '💧', price: 95,
-    de: { name: 'Rafahin Show mit Dinner', desc: 'Fesselnde Guaraní-Kulturshow mit festlichem Abendessen inbegriffen.' },
-    pt: { name: 'Rafahin Show com Jantar', desc: 'Espetáculo da cultura Guaraní com jantar festivo incluído.' },
-    en: { name: 'Rafahin Show with Dinner', desc: 'Guaraní cultural show with festive dinner included.' },
+    id: 'carnaval-backstage',
+    day: 3,
+    location: 'Rio de Janeiro',
+    locEmoji: '🎭',
+    price: 99,
+    currency: 'USD',
+    de: {
+      name: 'Carnaval Backstage-Tour',
+      desc: 'Blick hinter die Kulissen im Cidade do Samba: Kostüme, Festwagenbau, Welcome Caipirinha — exklusiv.',
+    },
+    pt: {
+      name: 'Tour Backstage Carnaval',
+      desc: 'Bastidores do Cidade do Samba: fantasias, construção de carros alegóricos, Welcome Caipirinha.',
+    },
+    en: {
+      name: 'Carnival Backstage Tour',
+      desc: 'Behind the scenes at Cidade do Samba: costumes, float construction and welcome Caipirinha.',
+    },
   },
   {
-    id: 'caboclos', day: 6, location: 'Amazônia', locEmoji: '🌿', price: 40,
-    de: { name: 'Ausflug zu den Caboclos', desc: 'Maniok-Farm der Caboclos — authentisches Amazonas-Dorfleben entdecken.' },
-    pt: { name: 'Visita aos Caboclos', desc: 'Roça de mandioca dos caboclos — vida ribeirinha amazônica genuína.' },
-    en: { name: 'Caboclos Village Visit', desc: 'Manioc farm of the Caboclos — authentic Amazon riverside life.' },
-  },
-  {
-    id: 'stadtspaziergang', day: 9, location: 'Rio de Janeiro', locEmoji: '🏖', price: 50,
-    de: { name: 'Stadtspaziergang Rio', desc: 'Historisches Zentrum + Caipirinha in Santa Teresa — Rios verborgene Seiten.' },
-    pt: { name: 'Caminhada pelo Rio', desc: 'Centro histórico + caipirinha em Santa Teresa — o Rio além do cartão-postal.' },
-    en: { name: 'Rio City Walk', desc: 'Historic downtown + caipirinha in Santa Teresa — Rio\'s hidden side.' },
-  },
-  {
-    id: 'corcovado', day: 10, location: 'Rio de Janeiro', locEmoji: '🏖', price: 125,
-    de: { name: 'Corcovado / Christusstatue', desc: 'Auffahrt zum Wahrzeichen Rios — 360°-Panoramablick über die Guanabara-Bucht.' },
-    pt: { name: 'Corcovado / Cristo Redentor', desc: 'Subida ao ícone do Rio — vista panorâmica de 360° da Baía de Guanabara.' },
-    en: { name: 'Corcovado / Christ the Redeemer', desc: 'Rio\'s most iconic landmark — 360° panoramic view over Guanabara Bay.' },
-  },
-  {
-    id: 'samba', day: 10, location: 'Rio de Janeiro', locEmoji: '🏖', price: 120,
-    de: { name: 'Samba-Show', desc: 'Glanzvolle Tanzshow mit Sambistas in Kostümen — pulsierendes Carioca-Erlebnis.' },
-    pt: { name: 'Show de Samba', desc: 'Espetáculo deslumbrante com sambistas fantasiados — energia carioca pura.' },
-    en: { name: 'Samba Show', desc: 'Spectacular costumed sambistas — pure Carioca rhythm and energy.' },
-  },
-  {
-    id: 'bahia-by-night', day: 12, location: 'Salvador', locEmoji: '🎭', price: 155,
-    de: { name: 'Bahia by Night', desc: 'Dinner + Capoeira + Maculelê + Afoxé — die Seele Bahias bei Nacht erleben.' },
-    pt: { name: 'Bahia by Night', desc: 'Jantar + Capoeira + Maculelê + Afoxé — a alma da Bahia ao anoitecer.' },
-    en: { name: 'Bahia by Night', desc: 'Dinner + Capoeira + Maculelê + Afoxé — the soul of Bahia after dark.' },
-  },
-  {
-    id: 'cachoeira', day: 13, location: 'Salvador', locEmoji: '🎭', price: 165,
-    de: { name: 'Cachoeira + Mittagessen', desc: 'Koloniale Flussstadt am São Francisco + lebendige Candomblé-Kultur Bahias.' },
-    pt: { name: 'Cachoeira + Almoço', desc: 'Cidade colonial às margens do São Francisco + Candomblé — Bahia profunda.' },
-    en: { name: 'Cachoeira + Lunch', desc: 'Colonial river town on the São Francisco + living Candomblé culture.' },
+    id: 'marius',
+    day: 5,
+    location: 'Rio de Janeiro',
+    locEmoji: '🦐',
+    price: 60,
+    currency: 'USD',
+    de: {
+      name: 'Marius Crustáceos Dinner',
+      desc: 'Spektakuläres Meeresfrüchte-Buffet Rodízio — so viel wie man mag, direkt an der Copacabana.',
+    },
+    pt: {
+      name: 'Jantar Marius Crustáceos',
+      desc: 'Espetacular buffet rodízio de frutos do mar — à vontade, à beira da Copacabana.',
+    },
+    en: {
+      name: 'Marius Crustáceos Dinner',
+      desc: 'Spectacular all-you-can-eat seafood rodízio buffet, right by Copacabana beach.',
+    },
   },
 ]
 
-const TRIP = `OPERATOR: OPCO Tours | opcotours.com | +5521-97565-5173 | carlos@opcotours.com
-DURATION: 15 days/14 nights | GROUP: 2-14 pax | AIRLINE: LATAM Airlines (LA)
-TRAVEL DATES: 2 Aug 2026 (Day 1) — 16 Aug 2026 (Day 15)
+const TRIP = `OPERATOR: OPCO Tours | opcotours.com | +5521-975655173 | carlos@opcotours.com
+CLIENT: Univentra
+DURATION: 8 Tage/7 Nächte | Rio de Janeiro | GROUP: 0 Personen (offen)
+TRAVEL DATES: 11. Februar 2027 (Tag 1) — 18. Februar 2027 (Tag 8)
+AUSSTELLUNGSDATUM: 18. Juni 2026
 
 ITINERARY:
-Day 1 (Sun 2 Aug) - OVERNIGHT FLIGHT Frankfurt->Sao Paulo: LA8071 FRA 21:30->GRU 04:35
-Day 2 (Mon 3 Aug) - FOZ DO IGUACU: LA3200 GRU 07:30->IGU 09:20. Transfer->Recanto Cataratas Thermas Resort. Caipirinha welcome drink. Brazilian side waterfalls (2.5km walkways). Optional: Macuco Boat Safari EUR 135.
-Day 3 (Tue 4 Aug) - FOZ DO IGUACU: Argentine side waterfalls (Garganta del Diablo). Free time/pool. Optional: Rafahin Show mit Dinner EUR 95.
-Day 4 (Wed 5 Aug) - MANAUS: Checkout. LA3879 IGU 14:50->GRU 16:35. LA3562 GRU 18:50->MAO 21:45. Check-in Blue Tree Premium Manaus. Guide Manaus: Rosalina Fernandes +5592993363882
-Day 5 (Thu 6 Aug) - AMAZON JUNGLE LODGE: Checkout Blue Tree. Transfer->Porto de Manaus. Speedboat->Amazon Village Jungle Lodge ~70min (past Meeting of Waters). Welcome drink. Canoe igapo. Piranha fishing. Sunset on river. Alligator spotting night tour.
-Day 6 (Fri 7 Aug) - AMAZON: Breakfast. Jungle trek flora/fauna. Optional: Ausflug zu den Caboclos EUR 40 (manioc farm visit). Canoe Acajatuba Village community. Night boat tour (caimans, frogs, birds).
-Day 7 (Sat 8 Aug) - MANAUS: Breakfast lodge. Speedboat back. Check-in Blue Tree. Visit Palácio Rio Negro + local markets. Lunch included. City tour + Teatro Amazonas.
-Day 8 (Sun 9 Aug) - RIO DE JANEIRO: Checkout. LA3469 MAO 11:35->GRU 16:30. LA3874 GRU 17:45->GIG 18:45. Check-in Hilton Rio Copacabana. Guide Rio: Ana Raquel +5521988811192
-Day 9 (Mon 10 Aug) - RIO: City tour: Sugarloaf Mountain, Sambodrome. Free afternoon. Optional: Stadtspaziergang Rio EUR 50 (downtown+caipirinha Santa Teresa). Dinner tip: Churrascaria Palace (walking distance).
-Day 10 (Tue 11 Aug) - RIO: Free day. Beach Copacabana. Optional: Corcovado/Christ Redeemer EUR 125. Optional Samba Show EUR 120. Optional: Museu do Amanhã or walk Selarón Steps to Santa Teresa.
-Day 11 (Wed 12 Aug) - SALVADOR: Checkout Hilton. LA3672 GIG 07:00->SSA 09:00. Check-in Novotel Salvador Rio Vermelho. Guide Salvador: Anke Landgraf +5571-999524442
-Day 12 (Thu 13 Aug) - SALVADOR: Half-day historical city tour, Pelourinho, Capoeira. Optional Bahia by Night Show incl. dinner EUR 155.
-Day 13 (Fri 14 Aug) - SALVADOR: Free day. Optional Cachoeira incl. lunch EUR 165. Farewell dinner with guide (included).
-Day 14 (Sat 15 Aug) - OVERNIGHT RETURN: Checkout. LA3355 SSA 18:40->GRU 21:10. LA8070 GRU 23:45->FRA 16:25 (next day).
-Day 15 (Sun 16 Aug) - ARRIVAL FRANKFURT.
+Tag 1 (Do, 11. Feb) - NACHTFLUG: Reisebeginn mit dem Nachtflug ab Deutschland/Luxemburg nach Rio de Janeiro. Entspannen an Bord und freuen Sie sich auf die "Cidade Maravilhosa".
+Tag 2 (Fr, 12. Feb) - ANKUNFT RIO DE JANEIRO: Am Morgen Ankunft am Flughafen Galeão (GIG). Empfang durch deutschsprachige Reiseleitung. Da die Zimmer noch nicht bezugsfertig sind, beginnen wir mit einer ausführlichen Orientierungsfahrt entlang der berühmten Strände von Copacabana, Ipanema und Leblon. Möglichkeit zum ersten brasilianischen Frühstück. Am Nachmittag Check-in im Hilton Rio de Janeiro Copacabana. Freizeit. Optional: Abendessen Restaurant Baleia (Meeresfrüchte, Aterro do Flamengo) ~USD 100/Person, Guide & Transport inbegriffen.
+Tag 3 (Sa, 13. Feb) - CORCOVADO & DESFILE DAS CAMPEÃS: Auffahrt zum Corcovado mit der Zahnradbahn zur weltberühmten Christusstatue (Cristo Redentor) und atemberaubendem Panorama. Danach exklusiver Spaziergang auf der Avenida Presidente Vargas: Besichtigung der Karnevalswagen (Carros Alegóricos) aus nächster Nähe, während sie für den Umzug vorbereitet werden. HÖHEPUNKT DER REISE: Desfile das Campeãs im Sambódromo (Arquibancada Sektor 9) — die Parade der siegreichen Sambaschulen, das spektakuläre Finale des Karnevals von Rio! Optional: Carnaval Experience Backstage-Tour mit Welcome Caipirinha ~USD 99/Person; Optional: Atelierbesuch Sambaschule ~USD 99/Person.
+Tag 4 (So, 14. Feb) - FREIER TAG: Tag zur freien Verfügung. Strand Copacabana, Rio auf eigene Faust erkunden oder Eindrücke der Karnevalsnacht genießen.
+Tag 5 (Mo, 15. Feb) - ZUCKERHUT: Auffahrt mit der Seilbahn auf den Zuckerhut (Pão de Açúcar) — grandiosen Ausblick über die Guanabara-Bucht, die Strände und die Stadt genießen. Optional: Dinner Marius Crustáceos (spektakuläres Meeresfrüchte-Buffet Rodízio) ~USD 60 Aufpreis/Person. Alternative: Hotel-Buffet-Dinner (~USD 60 Aufpreis/Person).
+Tag 6 (Di, 16. Feb) - KOLONIALES RIO: Entdeckungstour durch das historische und koloniale Rio: Stadtzentrum, Künstlerviertel Santa Teresa, Lapa-Bögen, bunte Selarón-Treppe. Am Abend gemeinsames Abendessen in der bekannten Churrascaria Carretão, Ipanema (im Reisepreis enthalten, brasilianisches Rodízio-Grillbuffet).
+Tag 7 (Mi, 17. Feb) - RÜCKFLUG: Freizeit bis zum Transfer zum Flughafen. Rückflug nach Deutschland/Luxemburg.
+Tag 8 (Do, 18. Feb) - ANKUNFT FRANKFURT/LUXEMBURG. Ende einer unvergesslichen Reise.
 
-HOTELS:
-1. Recanto Cataratas Thermas Resort & Convention - Foz do Iguacu (Days 2-4), 2 nights, breakfast. Tel: +55 45 2102-3000. Av. Costa e Silva 3500.
-2. Blue Tree Premium Manaus - Manaus (Day 4 + Days 7-8), 2 nights total, breakfast. Tel: +55 92 3303-2000. Av Umberto Calderaro Filho 817, Adrianópolis.
-3. Amazon Village Jungle Lodge - Amazon (Days 5-7), 2 nights, full board + all activities. Tel: +55 92 3633-1444. ~30km from Manaus. Mosquito nets, fan, hot shower, hammock veranda, pool, bar, restaurant, 24h reception.
-4. Hilton Rio de Janeiro Copacabana - Rio (Days 8-11), 3 nights, breakfast. Tel: +55 21 3501-8000. Av. Atlântica 1020, Copacabana.
-5. Novotel Salvador Rio Vermelho - Salvador (Days 11-14), 3 nights, breakfast. Tel: +55 71 2103-2233. Rua Monte Conselho 505, Rio Vermelho. Restaurant, bar, gym, tennis, sauna. Near: Porto da Barra beach, fish market.
+TRANSFERS:
+- 12. Feb: Flughafen Rio de Janeiro Galeão (GIG) → Hilton Rio de Janeiro Copacabana
+- 17. Feb: Hilton Rio de Janeiro Copacabana → Flughafen Galeão (GIG)
+- Geplanter Rückflug 17. Feb ab GIG nach FRA
 
-INCLUDED: All accommodation, breakfast all hotels, full board+activities at Jungle Lodge, all excursions+transfers as described, German-speaking local guides, caipirinha welcome drink Foz, lunches on Days 7 and 13.
+HOTEL (Hauptunterkunft):
+Hilton Rio de Janeiro Copacabana (4*+, direkt an der Copacabana) — 5 Übernachtungen, Frühstück inbegriffen
+Adresse: Avenida Atlântica 1020, Rio de Janeiro, 22010-000 | Tel: +55 21 3501-8000
+Ausstattung: Dachpool, Außenrestaurant, Fitnesscenter, Spa, Tagungsräume, Klimaanlage, WLAN, Minibar, Kaffee-/Teekocher, Haartrockner.
+Lage: 15 Minuten bis Zuckerhut, Maracanã-Stadion und Selarón-Treppe.
 
-NOT INCLUDED: Drinks, personal expenses, international and domestic flights + airport taxes, visa, optional excursions.
+HOTEL PREISOPTIONEN (pro Person, Doppelzimmer, USD):
+1. Hilton Copacabana (4*+, direkt Copacabana): 15+1: USD 5.448 | 20+1: USD 5.118 | 25+1: USD 4.941 | EZ-Zuschlag: USD 3.897
+2. PortoBay Copacabana (3,5+, direkt Copacabana): 15+1: USD 2.790 | 20+1: USD 2.528 | 25+1: USD 2.396 | EZ-Zuschlag: USD 1.590
+3. Windsor Marapendi (3,5+, direkt Sernambetiba, Barra da Tijuca): 15+1: USD 1.767 | 20+1: USD 1.557 | 25+1: USD 1.143 | EZ-Zuschlag: USD 612
+Erläuterung: 15+1 / 20+1 / 25+1 = Gruppengröße inkl. einem Freiplatz im Einzelzimmer pro Gruppe. EZ-Zuschlag = Aufpreis pro Person für Einzelzimmer. Hotels in 2. und 3. Reihe bereits ausgebucht.
 
-OPTIONAL EXCURSIONS: Macuco Boat Safari EUR 135 | Rafahin Show mit Dinner EUR 95 | Ausflug zu den Caboclos EUR 40 | Stadtspaziergang Rio EUR 50 | Corcovado EUR 125 | Samba Show EUR 120 | Bahia by Night incl. dinner EUR 155 | Cachoeira incl. lunch EUR 165
+INCLUDED: 5 Übernachtungen im gewählten Hotel inkl. Frühstück. Alle Transfers und Ausflüge im klimatisierten Reisebus. Deutschsprachige örtliche Reiseleitung. Eintritt Corcovado / Cristo Redentor. Eintritt Zuckerhut / Pão de Açúcar. Eintrittskarte Desfile das Campeãs (Arquibancada Sektor 9). Orientierungsfahrt. Spaziergang zu den Karnevalswagen (Av. Presidente Vargas). Tour "Koloniales Rio". Abendessen Churrascaria Carretão Ipanema (Tag 6).
 
-GUIDES: Foz: Jair Johanns +5548-84725462 | Manaus city: Rosalina Fernandes +5592993363882 | Lodge: Rosalina Fernandes +5592993363882 | Rio: Ana Raquel +5521988811192 | Salvador: Anke Landgraf +5571-999524442
+NOT INCLUDED: Internationale Flüge. Inlandsflüge. Reiseversicherung. Mahlzeiten außer Frühstück und Abendessen Tag 6. Getränke. Trinkgelder und persönliche Ausgaben. Optionale Programme und Upgrades. VISA Services (Schengen-Besucher benötigen derzeit kein Visum für Brasilien).
 
-AMAZON TIPS: Pack: light rain jacket, sturdy shoes, sunglasses, binoculars, flashlight, insect repellent, sunscreen, swimwear, personal medicine. Speedboat ~70min no AC. Dry season (Sep-Dec): lower water level, possible short walk. Wet season (Jan-Aug): higher water = better wildlife viewing. No luggage restrictions. Emergency flashlight in each room. Bring cash (Brazilian Real).`
+OPTIONAL EXCURSIONS: Carnaval Experience Backstage-Tour (Cidade do Samba, inkl. Welcome Drink): ~USD 99/Person | Dinner Restaurant Baleia (Meeresfrüchte, Tag 2): ~USD 100/Person | Marius Crustáceos (Meeresfrüchte-Rodízio, Tag 5): ~USD 60 Aufpreis/Person | Atelierbesuch Sambaschule: ~USD 99/Person
+
+PAYMENT & BOOKING: 20% sofortige Anzahlung. 60% nach 30 Tagen (damit können Hotels und Karnevalstickets garantiert werden). Restbetrag 60 Tage vor Reisebeginn. STORNIERUNG: 100% Stornierungsgebühr — keine Rückerstattung! Hotelsoptionen für die nächsten 2 Wochen reserviert.
+
+CONTACT: Carlos Silva | carlos@opcotours.com | +5521-975655173 | opcotours.com
+EMERGENCY: +5521-975655173 | carlos@opcotours.com`
 
 const ERROR_MSGS = {
   de: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie OPCO Tours: carlos@opcotours.com',
@@ -168,7 +186,7 @@ function ExcursionCard({ excursion, lang, t, onBook, isBooking }) {
       <h3 className="ex-card__name">{excursion[lang].name}</h3>
       <p className="ex-card__desc">{excursion[lang].desc}</p>
       <div className="ex-card__footer">
-        <span className="ex-card__price">EUR {excursion.price}</span>
+        <span className="ex-card__price">{excursion.currency} {excursion.price}</span>
         <button className="ex-card__btn" onClick={() => onBook(excursion)} disabled={isBooking}>
           {isBooking ? t.booking : t.book}
           {!isBooking && <span className="ex-card__arrow">→</span>}
@@ -237,7 +255,7 @@ export default function App() {
 
     const sys =
       LANGS[lang].sysLang +
-      '\n\nYou are the official travel assistant for "Die Vielfalt Brasiliens - Gebeco" by OPCO Tours. Answer questions accurately based on the trip information below. If something is not in the trip info, say you don\'t have that information but provide the guide or operator contact. Be concise.\n\n' +
+      '\n\nYou are the official travel assistant for "Rio Karneval-Sieger" by Univentra and OPCO Tours. Answer questions accurately based on the trip information below. If something is not in the trip info, say you don\'t have that information but provide the guide or operator contact. Be concise.\n\n' +
       TRIP
 
     try {
@@ -317,21 +335,21 @@ export default function App() {
     <div className="app">
       <header className="site-header">
         <div className="site-header__inner">
-          <span className="site-header__flag">🇧🇷</span>
+          <span className="site-header__flag">🎉🇧🇷🎊</span>
           <h1 className="site-header__title">
-            Die Vielfalt<br /><em>Brasiliens</em>
+            Rio Karneval<br /><em>Sieger-Parade</em>
           </h1>
-          <p className="site-header__sub">Gebeco · OPCO Tours · 15 Tage · Frankfurt → Brasilien → Frankfurt</p>
+          <p className="site-header__sub">Univentra · OPCO Tours · 8 Tage · 11.–18. Februar 2027</p>
           <div className="destinos">
-            <span>✈ Frankfurt</span>
+            <span>✈ Deutschland/Luxemburg</span>
             <span className="destinos__sep">·</span>
-            <span>💧 Foz do Iguaçu</span>
+            <span>✝ Corcovado</span>
             <span className="destinos__sep">·</span>
-            <span>🌿 Amazônia</span>
+            <span>🎭 Sambódromo</span>
             <span className="destinos__sep">·</span>
-            <span>🏖 Rio de Janeiro</span>
+            <span>🌅 Copacabana</span>
             <span className="destinos__sep">·</span>
-            <span>🎭 Salvador</span>
+            <span>⛰ Zuckerhut</span>
           </div>
           <div className="lang-bar">
             {[['de', '🇩🇪 Deutsch'], ['pt', '🇧🇷 Português'], ['en', '🇬🇧 English']].map(([l, label]) => (
@@ -365,7 +383,7 @@ export default function App() {
               <div className="messages" ref={messagesRef}>
                 {messages.map((m, i) => (
                   <div key={i} className={`msg ${m.role}`}>
-                    <div className={`avatar ${m.role}`}>{m.role === 'bot' ? '🌿' : '👤'}</div>
+                    <div className={`avatar ${m.role}`}>{m.role === 'bot' ? '🎭' : '👤'}</div>
                     {m.typing ? <TypingDots /> : <BubbleText text={m.text} />}
                   </div>
                 ))}
@@ -413,7 +431,7 @@ export default function App() {
         )}
       </main>
 
-      <footer className="site-footer">Powered by OPCO Tours · claude.ai</footer>
+      <footer className="site-footer">Powered by Univentra · OPCO Tours · claude.ai</footer>
     </div>
   )
 }
