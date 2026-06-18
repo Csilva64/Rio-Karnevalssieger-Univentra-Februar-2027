@@ -145,8 +145,7 @@ INCLUDED: 5 Übernachtungen im gewählten Hotel inkl. Frühstück. Alle Transfer
 
 NOT INCLUDED: Internationale Flüge. Inlandsflüge. Reiseversicherung. Mahlzeiten außer Frühstück und Abendessen Tag 6. Getränke. Trinkgelder und persönliche Ausgaben. Optionale Programme und Upgrades. VISA Services (Schengen-Besucher benötigen derzeit kein Visum für Brasilien).
 
-OPTIONAL EXCURSIONS: Carnaval Experience Backstage-Tour (Cidade do Samba, inkl. Welcome Drink): ~USD 99/Person | Dinner Restaurant Baleia (Meeresfrüchte, Tag 2): ~USD 100/Person | Marius Crustáceos (Meeresfrüchte-Rodízio, Tag 5): ~USD 60 Aufpreis/Person | Atelierbesuch Sambaschule: ~USD 99/Person
-
+OPTIONAL EXCURSIONS: Carnaval Experience Backstage-Tour (Cidade do Samba, inkl. Welcome Drink): ~USD 99/Person | Dinner Restaurant Baleia (Meeresfrüchte, Tag 2): ~USD 100/Person | Marius Crustáceos (Meeresfrüchte-Rodízio, Tag 5): ~USD 60 Aufpreis/Person
 PAYMENT & BOOKING: 20% sofortige Anzahlung. 60% nach 30 Tagen (damit können Hotels und Karnevalstickets garantiert werden). Restbetrag 60 Tage vor Reisebeginn. STORNIERUNG: 100% Stornierungsgebühr — keine Rückerstattung! Hotelsoptionen für die nächsten 2 Wochen reserviert.
 
 CONTACT: Carlos Silva | carlos@opcotours.com | +5521-975655173 | opcotours.com
