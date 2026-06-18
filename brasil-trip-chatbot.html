@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reiseassistent — Die Vielfalt Brasiliens - Gebeco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#1a6b3c;--verde-claro:#2d9e5f;--azul:#0a3d6b;--creme:#fdf8f0;--texto:#1c1c1c;--cinza:#6b6b6b;--sombra:rgba(10,61,107,0.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--creme);min-height:100vh;display:flex;flex-direction:column;align-items:center;background-image:radial-gradient(ellipse at 10% 20%,rgba(26,107,60,.08) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(10,61,107,.08) 0%,transparent 50%)}
+.header{width:100%;max-width:780px;padding:20px 20px 12px;text-align:center}
+.header-flag{font-size:1.8rem;margin-bottom:4px;display:block}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.8rem);color:var(--azul);font-weight:700;line-height:1.2}
+.header h1 em{font-style:italic;color:var(--verde)}
+.header p{color:var(--cinza);font-size:.8rem;margin-top:4px;font-weight:300}
+.destinos-pills{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.pill{background:#fff;border:1.5px solid rgba(10,61,107,.15);color:var(--azul);font-size:.68rem;font-weight:500;padding:3px 9px;border-radius:20px}
+.lang-bar{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.lang-btn{background:#fff;border:1.5px solid rgba(10,61,107,.2);color:var(--azul);font-family:'DM Sans',sans-serif;font-size:.73rem;font-weight:500;padding:4px 13px;border-radius:20px;cursor:pointer;transition:all .2s}
+.lang-btn.active{background:var(--azul);color:#fff;border-color:var(--azul)}
+.lang-btn:hover:not(.active){background:rgba(10,61,107,.07)}
+.chat-wrapper{width:100%;max-width:780px;flex:1;display:flex;flex-direction:column;padding:0 12px 12px}
+.chat-box{flex:1;background:#fff;border-radius:18px;box-shadow:0 4px 40px var(--sombra);overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(10,61,107,.08)}
+.messages{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;min-height:300px;max-height:52vh}
+.messages::-webkit-scrollbar{width:3px}
+.messages::-webkit-scrollbar-thumb{background:rgba(10,61,107,.18);border-radius:3px}
+.msg{display:flex;gap:8px;align-items:flex-end;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+.avatar.bot{background:linear-gradient(135deg,var(--verde),var(--verde-claro))}
+.avatar.user{background:var(--azul)}
+.bubble{max-width:78%;padding:10px 14px;border-radius:16px;font-size:.86rem;line-height:1.55;color:var(--texto)}
+.msg.bot .bubble{background:#fff;border:1px solid rgba(10,61,107,.1);border-bottom-left-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.msg.user .bubble{background:var(--azul);color:#fff;border-bottom-right-radius:3px}
+.bubble strong{font-weight:600}
+.typing-dots{display:flex;gap:5px;align-items:center}
+.typing-dots span{width:6px;height:6px;background:var(--cinza);border-radius:50%;animation:bounce 1.2s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.suggestions{padding:8px 12px;border-top:1px solid rgba(10,61,107,.06);display:flex;gap:6px;flex-wrap:wrap;background:rgba(253,248,240,.95)}
+.sugg-btn{background:#fff;border:1.5px solid rgba(10,61,107,.18);color:var(--azul);font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;padding:4px 10px;border-radius:16px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.sugg-btn:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+.input-area{display:flex;gap:8px;margin-top:8px;background:#fff;border-radius:14px;padding:8px 12px;box-shadow:0 2px 16px var(--sombra);border:1px solid rgba(10,61,107,.1)}
+#userInput{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:.86rem;color:var(--texto);background:transparent;resize:none;max-height:80px;line-height:1.5}
+#userInput::placeholder{color:#bbb}
+#sendBtn{background:var(--verde);color:#fff;border:none;border-radius:9px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+#sendBtn:hover{background:var(--verde-claro);transform:scale(1.05)}
+#sendBtn:disabled{background:#ccc;cursor:not-allowed;transform:none}
+#sendBtn svg{width:15px;height:15px}
+.footer-note{text-align:center;font-size:.66rem;color:#ccc;margin-top:6px;padding-bottom:6px}
+@media(max-width:600px){.bubble{max-width:88%}.messages{max-height:45vh}}
+</style>
+</head>
+<body>
+<div class="header">
+  <span class="header-flag">&#127463;&#127479;</span>
+  <h1>Reiseassistent &mdash; <em>Die Vielfalt Brasiliens - Gebeco</em></h1>
+  <p>Organisiert von OPCO Tours &middot; 15 Tage &middot; Frankfurt &rarr; Brasilien &rarr; Frankfurt</p>
+  <div class="destinos-pills">
+    <span class="pill">&#9992; Frankfurt</span>
+    <span class="pill">&#128166; Foz do Igua&ccedil;u</span>
+    <span class="pill">&#127807; Amazonas</span>
+    <span class="pill">&#127958; Rio de Janeiro</span>
+    <span class="pill">&#127917; Salvador</span>
+  </div>
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('de')">&#127465;&#127466; Deutsch</button>
+    <button class="lang-btn" onclick="setLang('pt')">&#127463;&#127479; Portugu&ecirc;s</button>
+    <button class="lang-btn" onclick="setLang('en')">&#127468;&#127463; English</button>
+  </div>
+</div>
+<div class="chat-wrapper">
+  <div class="chat-box">
+    <div class="messages" id="messages"></div>
+    <div class="suggestions" id="suggestions"></div>
+  </div>
+  <div class="input-area">
+    <textarea id="userInput" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+  <p class="footer-note">Powered by OPCO Tours &middot; claude.ai</p>
+</div>
+<script>
+const LANGS={
+  de:{
+    placeholder:"Stellen Sie eine Frage zur Reise...",
+    welcome:"Herzlich willkommen! Ich bin Ihr persönlicher Reiseassistent für **Die Vielfalt Brasiliens - Gebeco**.\n\nIch begleite Sie auf Ihrer **15-tägigen Brasilien-Reise** — von den Iguaçu-Wasserfällen über den Amazonas-Dschungel und Rio de Janeiro bis nach Salvador.\n\nFragen Sie mich gern nach dem Tagesablauf, Hotels, Flügen, Ausflügen, Reiseleitern oder allem, was Sie über Ihre Reise wissen möchten!",
+    suggestions:["Tagesablauf anzeigen","Hotels und Unterkünfte","Was ist inbegriffen?","Flugdetails","Amazonas-Programm","Reiseleiter-Kontakte"],
+    sysLang:"Antworte IMMER auf Deutsch. Sei freundlich, präzise und enthusiastisch. Nutze Emojis sparsam."
+  },
+  pt:{
+    placeholder:"Faça uma pergunta sobre a viagem...",
+    welcome:"Olá! Bem-vindo ao assistente de viagem da **Die Vielfalt Brasiliens - Gebeco**!\n\nEstou aqui para ajudá-lo durante os **15 dias pelo Brasil** — das Cataratas do Iguaçu à Amazônia, do Rio de Janeiro a Salvador.\n\nPergunte sobre o roteiro, hotéis, voos, passeios, guias ou qualquer coisa sobre a viagem!",
+    suggestions:["Ver roteiro dia a dia","Hotéis e hospedagens","O que está incluído?","Detalhes dos voos","Programa na Amazônia","Contatos dos guias"],
+    sysLang:"Responda SEMPRE em português brasileiro. Seja amigável, preciso e entusiasmado. Use emojis com moderação."
+  },
+  en:{
+    placeholder:"Ask a question about the trip...",
+    welcome:"Welcome! I'm your personal travel assistant for **Die Vielfalt Brasiliens - Gebeco**.\n\nI'm here to help throughout your **15-day Brazil journey** — from Iguaçu Falls through the Amazon jungle, Rio de Janeiro and Salvador.\n\nAsk me about the daily itinerary, hotels, flights, excursions, guides, or anything else about your trip!",
+    suggestions:["Show daily itinerary","Hotels & accommodation","What's included?","Flight details","Amazon programme","Guide contacts"],
+    sysLang:"ALWAYS respond in English. Be friendly, precise and enthusiastic. Use emojis sparingly."
+  }
+};
+
+const TRIP=`OPERATOR: OPCO Tours | opcotours.com | +5521-97565-5173 | carlos@opcotours.com
+DURATION: 15 days/14 nights | GROUP: 2-14 pax | AIRLINE: LATAM Airlines (LA)
+
+ITINERARY:
+Day 1 - OVERNIGHT FLIGHT Frankfurt->Sao Paulo: LA8071 FRA 21:40->GRU 04:50
+Day 2 - FOZ DO IGUACU: LA3200 GRU 07:50->IGU 09:35. Transfer->Recanto Cataratas Thermas Resort. Caipirinha welcome drink. Brazilian side waterfalls (2.5km walkways). Hubby eSIM 1GB (get code from guide). Guide Foz: Jandir Both +5545991040951
+Day 3 - FOZ DO IGUACU: Argentine side waterfalls. Free time/pool.
+Day 4 - MANAUS: Checkout. LA3879 IGU 15:00->GRU 16:45. LA3562 GRU 18:55->MAO 21:55. Check-in Blue Tree Premium Manaus. Guide Manaus: Peter Hagnauer +5592994300840
+Day 5 - AMAZON JUNGLE LODGE: Checkout Blue Tree. Transfer->Porto de Manaus. Speedboat->Amazon Village Jungle Lodge ~70min (past Meeting of Waters). Welcome drink. Canoe igapo. Piranha fishing. Sunset. Night caiman spotting. Guide Lodge: Rosalina Fernandes +5592993363882
+Day 6 - AMAZON: Breakfast. Jungle trek flora/fauna. Visit Caboclo family. Canoe Acajatuba Village community. Night boat tour.
+Day 7 - MANAUS: Breakfast lodge. Speedboat back. Check-in Blue Tree. Lunch. City tour + Teatro Amazonas.
+Day 8 - RIO DE JANEIRO: Checkout. LA3469 MAO 11:25->GRU 16:25. LA3874 GRU 17:45->GIG 18:45. Check-in Hilton Rio Copacabana. Guide Rio: Henrik Karsten +5521964660288
+Day 9 - RIO: City tour: Sugarloaf Mountain, Sambodrome. Free afternoon. Optional: Walking tour downtown+caipirinha Santa Teresa. Dinner tip: Churrascaria Palace (walking distance).
+Day 10 - RIO: Optional Corcovado/Christ Redeemer (38m, 7 Wonders) EUR 125. Cog railway Tijuca Forest. Optional Samba Show EUR 120.
+Day 11 - SALVADOR: Checkout Hilton. LA3672 GIG 08:50->SSA 10:50. Check-in Novotel Salvador Rio Vermelho. Guide Salvador: Markus Priller +5571999962088
+Day 12 - SALVADOR: Half-day historical city tour, Pelourinho. Optional Bahia by Night Show incl. dinner EUR 130.
+Day 13 - SALVADOR: Free day. Optional Cachoeira incl. lunch EUR 165. Farewell dinner with guide.
+Day 14 - OVERNIGHT RETURN: Checkout. LA3355 SSA 17:55->GRU 20:30. LA8070 GRU 23:45->FRA 16:25 (next day).
+Day 15 - ARRIVAL FRANKFURT.
+
+HOTELS:
+1. Recanto Cataratas Thermas Resort & Convention - Foz do Iguacu (Days 2-4), 2 nights, breakfast
+2. Blue Tree Premium Manaus - Manaus (Day 4 + Days 7-8), breakfast
+3. Amazon Village Jungle Lodge - Amazon (Days 5-7), 2 nights, full board + all activities. Mosquito nets, fan, hot shower, hammock veranda, pool, bar, restaurant, 24h reception, ~30km from Manaus.
+4. Hilton Rio de Janeiro Copacabana - Rio (Days 8-11), 3 nights, breakfast
+5. Novotel Salvador Rio Vermelho - Salvador (Days 11-14), 3 nights. Restaurant, bar, gym, tennis, sauna. Near: Porto da Barra beach, fish market.
+
+INCLUDED: All accommodation, breakfast all hotels, full board+activities at Jungle Lodge, all excursions+transfers, German-speaking local guides, caipirinha welcome drink Foz, Hubby eSIM 1GB, lunch Manaus Day 7, Manaus city tour+Teatro Amazonas.
+
+NOT INCLUDED: Drinks, personal expenses, flights+airport taxes, visa, optional excursions.
+
+OPTIONAL EXCURSIONS: Corcovado EUR 125 | Samba Show EUR 120 | Bahia by Night incl. dinner EUR 130 | Cachoeira incl. lunch EUR 165
+
+GUIDES: Foz: Jandir Both +5545991040951 | Manaus city: Peter Hagnauer +5592994300840 | Lodge: Rosalina Fernandes +5592993363882 | Rio: Henrik Karsten +5521964660288 | Salvador: Markus Priller +5571999962088 | OPCO Tours: carlos@opcotours.com / +5521-97565-5173
+
+AMAZON TIPS: Pack: light rain jacket, sturdy shoes, sunglasses, binoculars, flashlight, insect repellent, sunscreen, swimwear, personal medicine. Speedboat ~70min no AC. Dry season (Sep-Dec): possible 300m walk. Switch off lights in storms. Emergency flashlight in room.`;
+
+let lang='de';
+const history=[];
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.lang-btn[onclick="setLang(\''+l+'\')"]').classList.add('active');
+  document.getElementById('userInput').placeholder=LANGS[l].placeholder;
+  renderSuggestions();
+  document.getElementById('messages').innerHTML='';
+  history.length=0;
+  addMsg('bot',LANGS[l].welcome);
+}
+
+function renderSuggestions(){
+  const box=document.getElementById('suggestions');
+  box.innerHTML='';
+  LANGS[lang].suggestions.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='sugg-btn';b.textContent=s;
+    b.onclick=()=>{document.getElementById('userInput').value=s;sendMessage();};
+    box.appendChild(b);
+  });
+}
+
+function addMsg(role,text,isTyping=false){
+  const msgs=document.getElementById('messages');
+  const d=document.createElement('div');
+  d.className='msg '+role+(isTyping?' typing':'');
+  const av=document.createElement('div');
+  av.className='avatar '+role;
+  av.textContent=role==='bot'?'\uD83C\uDF3F':'\uD83D\uDC64';
+  const bub=document.createElement('div');
+  bub.className='bubble';
+  if(isTyping){bub.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';}
+  else{bub.innerHTML=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
+  d.appendChild(av);d.appendChild(bub);
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+  return d;
+}
+
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+
+async function sendMessage(){
+  const inp=document.getElementById('userInput');
+  const text=inp.value.trim();
+  if(!text)return;
+  const btn=document.getElementById('sendBtn');
+  btn.disabled=true;inp.value='';inp.style.height='auto';
+  addMsg('user',text);
+  history.push({role:'user',content:text});
+  const typing=addMsg('bot','',true);
+  const sys=LANGS[lang].sysLang+'\n\nYou are the official travel assistant for "Die Vielfalt Brasiliens - Gebeco" by OPCO Tours. Answer questions accurately based on the trip information below. If something is not covered, direct the passenger to contact OPCO Tours.\n\n'+TRIP;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:history})
+    });
+    const data=await r.json();
+    const reply=data?.content?.[0]?.text;
+    if(!reply)throw new Error('empty');
+    typing.remove();
+    addMsg('bot',reply);
+    history.push({role:'assistant',content:reply});
+  }catch(e){
+    typing.remove();
+    const fb={de:'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie OPCO Tours: carlos@opcotours.com',pt:'Ocorreu um erro. Tente novamente ou contate a OPCO Tours: carlos@opcotours.com',en:'An error occurred. Please try again or contact OPCO Tours: carlos@opcotours.com'};
+    addMsg('bot',fb[lang]);
+  }
+  btn.disabled=false;inp.focus();
+}
+
+window.addEventListener('load',()=>{
+  document.getElementById('userInput').placeholder=LANGS['de'].placeholder;
+  renderSuggestions();
+  setTimeout(()=>addMsg('bot',LANGS['de'].welcome),300);
+});
+</script>
+</body>
+</html>
